@@ -1,11 +1,11 @@
-import { Ionicons } from "@expo/vector-icons";
-import { StatusBar } from "expo-status-bar";
 import { StyleSheet } from "react-native";
+import { StatusBar } from "expo-status-bar";
+import { Ionicons } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-
-import FavoriteContextProvider from "./store/context/favorites-context";
+import { Provider } from "react-redux";
+import { store } from "./store/redux/store";
 
 import CONFIG from "./config";
 import CategoryScreen from "./screens/CategoryScreen";
@@ -49,7 +49,7 @@ export default function App() {
   return (
     <>
       <StatusBar style="light" />
-      <FavoriteContextProvider>
+      <Provider store={store}>
         <NavigationContainer>
           <Stack.Navigator
             initialRouteName="Drawer"
@@ -82,7 +82,7 @@ export default function App() {
             />
           </Stack.Navigator>
         </NavigationContainer>
-      </FavoriteContextProvider>
+      </Provider>
     </>
   );
 }

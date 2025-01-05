@@ -1,5 +1,7 @@
 import { useLayoutEffect } from "react";
 import { View, Image, Text, ScrollView, StyleSheet } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
+import { addFavorite, removeFavorite } from "../store/redux/favorites";
 
 import MealDetail from "../components/MealDetail";
 import Subtitle from "../components/Subtitle";
@@ -8,19 +10,17 @@ import IconButton from "../components/IconButton";
 
 import { MEALS } from "../data/dummy-data";
 import { COLORS } from "../config";
-import { useFavorites } from "../store/context/favorites-context";
 
 const DetailScreen = ({ route, navigation }) => {
   const mealId = route.params.mealId;
   const selectedMeal = MEALS.find((meal) => meal.id === mealId);
-
-  const { favoriteMealIds, addToFavorites, removeFromFavorites } =
-    useFavorites();
+  const favoriteMealIds = useSelector((state) => state.favoriteMeals.ids);
+  const dispatch = useDispatch();
 
   const headerButtonPressHandler = (value) => {
     value
-      ? addToFavorites(selectedMeal.id)
-      : removeFromFavorites(selectedMeal.id);
+      ? dispatch(addFavorite({ id: mealId }))
+      : dispatch(removeFavorite({ id: mealId }));
   };
 
   const isFavorite = favoriteMealIds.includes(selectedMeal.id);

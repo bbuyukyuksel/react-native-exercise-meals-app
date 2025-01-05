@@ -1,11 +1,11 @@
 import { View, Text, StyleSheet, FlatList } from "react-native";
-import { useFavorites } from "../store/context/favorites-context";
+import { useSelector } from "react-redux";
 import { MEALS } from "../data/dummy-data";
 import FavoriteItem from "../components/FavoriteItem";
 import { COLORS } from "../config";
 
 const FavoriteScreen = (props) => {
-  const { favoriteMealIds } = useFavorites();
+  const favoriteMealIds = useSelector((state) => state.favoriteMeals.ids);
   const favoriteMeals = MEALS.filter((meal) =>
     favoriteMealIds.includes(meal.id),
   );
